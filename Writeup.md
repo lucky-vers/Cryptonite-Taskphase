@@ -178,14 +178,6 @@ We then perform `cat` on the file as usual.
 ```
 bandit5@bandit:~$ cat ./inhere/maybehere07/.file2
 P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
-
-
-
-
-
-
-
-
 ```
 
 The password is revealed to be `P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU`.
