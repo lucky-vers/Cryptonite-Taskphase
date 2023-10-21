@@ -253,6 +253,8 @@ The logic behind this is as follows
 - Unix pipes such as `|` essentially take the standard output of the command on the left side of the pipe, and feed it into the standard input of the command on the right. This is convenient for complex text processing, as no mediator variables need to be assigned here.
 - `sort -nr` has two flags in one, `-n` and `-r`. This modifies `sort` to arrange lines by their numeric increasing order instead of alphabetical, and `-r` simply reverses the order of the output from increasing order to decreasing order. This is done for convenience's sake as we won't have to scroll up the terminal to find the one line with a `1` on its left side.
 
+The `uniq -c | sort -nr` commands can also be replaced by a single command, `uniq -u`. The `-u` flag makes it so that uniq only prints unique lines, i.e. lines with only one instance in the text stream.
+
 As we can see, there's only a single line with one occurrence in the file, and it is `EN632PlfYiZbn3PhVK3XOGSlNInNE00t`. We use it as our password for the next level and continue forth.
 
 # Level 9 → 10
