@@ -11,7 +11,7 @@ Lets understand the structure of the command first.
 - `ssh`, part of the OpenSSH package is the tool used to remotely connect to servers via the CLI.
 - `bandit0` is the username we wish to log in with.
 - `@bandit.labs.overthewire.org` is the domain name of the server we want to connect to.
-- `-p 2220` is a flag specifying the port we want to connect to the server with.
+- `-p 2220` is a flag specifying the port we want to connect to the server with (in this case 2220).
 
 Once we log in, we're greeted with the following page
 
@@ -29,7 +29,7 @@ Once we log in, we're greeted with the following page
 bandit0@bandit.labs.overthewire.org's password:
 ```
 
-We paste the password we were given (bandit0), and are dropped into a shell session.
+We paste the password we were given **(bandit0)**, and are dropped into a shell session.
 
 ```
 bandit0@bandit:~$
@@ -61,7 +61,7 @@ The `cat` command simply outputs the contents of a file to the terminal. We run 
 bandit1@bandit.labs.overthewire.org's password:
 ```
 
-We then input the password in (NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL), and thus get to Level 1.
+We then input the password in **(NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL)**, and thus get to Level 1.
 
 # Level 1 → Level 2
 
@@ -96,7 +96,7 @@ bandit2@bandit:~$ cat "spaces in this filename"
 aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 ```
 
-We ssh into the next level, enter the password given (aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG) into the prompt, and finish the second stage.
+We ssh into the next level, enter the password given **(aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG)** into the prompt, and finish the second stage.
 
 # Level 3 → 4
 
