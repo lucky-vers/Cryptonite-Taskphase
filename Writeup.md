@@ -182,3 +182,69 @@ P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
 ```
 
 The password is revealed to be `P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU`.
+
+# Level 6 → 7
+
+The password of this level has the following properties
+
+- owned by user bandit7
+- owned by group bandit6
+- 33 bytes in size
+
+The required commmand for this is
+```
+find / -size 33c -user bandit7 -group bandit6 2>/dev/null
+```
+
+- `/` tells find that we want to search the entire filesystem, i.e. the root directory, for the file.
+- `-size 33c` means the file's size has to be exactly 33 bytes long.
+- `-user bandit7` and `-group bandit6` filter for only those files owned by user bandit7 and group bandit6, respectively.
+- `2>/dev/null` removes any error messages that might show up while running the command, e.g. `permission denied` errors.
+
+The result of the command is
+```
+bandit6@bandit:~$ find / -size 33c -user bandit7 -group bandit6 2>/dev/null
+/var/lib/dpkg/info/bandit7.password
+bandit6@bandit:~$ cat /var/lib/dpkg/info/bandit7.password
+z7WtoNQU2XfjmMtWA8u5rN4vzqu4v99S
+```
+
+Thus, we clear the 6th stage.
+
+# Level 7 → 8
+
+The password for level 8 is stored in the file data.txt next to the word millionth. We take advantage of a new command, `grep` to find the password here. `grep` is essentially a search tool to find text in plaintext files quickly and easily.
+
+```
+bandit7@bandit:~$ grep millionth data.txt
+millionth       TESKZC0XvTetK0S9xNwm25STk5iWrBvP
+```
+
+Here, `millionth` is the word we need to find, and `data.txt` the filename. As we can see, the password turns out to be `TESKZC0XvTetK0S9xNwm25STk5iWrBvP`. The seventh stage has been cleared.
+
+# Level 8 → 9
+
+It is given here that the password for the next level is stored in the file data.txt and is the only line of text that occurs only once.
+
+We use a slightly more complicated *chain* of commands to find the result here.
+
+```
+bandit8@bandit:~$ sort data.txt | uniq -c | sort -nr
+.
+.
+.
+     10 365RauAVsFlxktPMpoLtIf1uxijU1TfV
+     10 2CQ5DQRdtoe9Ft8YpMHqCwQcN1Bk9lCI
+     10 1iyGemEgn3qUOOFcAJyGPHOiewqZyp1y
+     10 18DyjwhN856SsMx8bNrFSvr6rJxNQKhE
+      1 EN632PlfYiZbn3PhVK3XOGSlNInNE00t
+```
+
+The logic behind this is as follows
+
+- `sort data.txt` uses the `sort` program to arrange all the lines in the file `data.txt` alphabetically. This has the added effect of grouping together similar strings.
+- Pipes such as `|` essentially take the standard output of the command on the left side of the pipe, and feed it into the standard input of the command on the right. This is convenient for complex text processing, as no mediator variables need to be assigned here.
+- `uniq -c` processes the sorted output of `data.txt` and outputs only the unique lines. As we used the `-c` flag, it prints the number of occurrences of every unique line in the original file on the left, with the line itself on the right.
+- `sort -nr` has two flags in one, `-n` and `-r`. This modifies `sort` to arrange lines by their numeric increasing order instead of alphabetical, and `-r` simply reverses the order of the output from increasing order to decreasing order. This is done for convenience's sake as we won't have to scroll up the terminal to find the one line with a `1` on its left side.
+
+As we can see, there's only a single line with one occurrence in the file, and it is `EN632PlfYiZbn3PhVK3XOGSlNInNE00t`. We use it as our password for the next level and continue forth.
