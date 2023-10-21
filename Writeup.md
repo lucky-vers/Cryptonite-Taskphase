@@ -217,7 +217,7 @@ The password for level 8 is stored in the file data.txt next to the word million
 
 ```
 bandit7@bandit:~$ grep millionth data.txt
-*millionth*       TESKZC0XvTetK0S9xNwm25STk5iWrBvP
+millionth       TESKZC0XvTetK0S9xNwm25STk5iWrBvP
 ```
 
 Here, `millionth` is the word we need to find, and `data.txt` the filename. As we can see, the password turns out to be `TESKZC0XvTetK0S9xNwm25STk5iWrBvP`. The seventh stage has been cleared.
