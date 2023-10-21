@@ -243,8 +243,67 @@ bandit8@bandit:~$ sort data.txt | uniq -c | sort -nr
 The logic behind this is as follows
 
 - `sort data.txt` uses the `sort` program to arrange all the lines in the file `data.txt` alphabetically. This has the added effect of grouping together similar strings.
-- Pipes such as `|` essentially take the standard output of the command on the left side of the pipe, and feed it into the standard input of the command on the right. This is convenient for complex text processing, as no mediator variables need to be assigned here.
-- `uniq -c` processes the sorted output of `data.txt` and outputs only the unique lines. As we used the `-c` flag, it prints the number of occurrences of every unique line in the original file on the left, with the line itself on the right.
+- Unix pipes such as `|` essentially take the standard output of the command on the left side of the pipe, and feed it into the standard input of the command on the right. This is convenient for complex text processing, as no mediator variables need to be assigned here.
 - `sort -nr` has two flags in one, `-n` and `-r`. This modifies `sort` to arrange lines by their numeric increasing order instead of alphabetical, and `-r` simply reverses the order of the output from increasing order to decreasing order. This is done for convenience's sake as we won't have to scroll up the terminal to find the one line with a `1` on its left side.
 
 As we can see, there's only a single line with one occurrence in the file, and it is `EN632PlfYiZbn3PhVK3XOGSlNInNE00t`. We use it as our password for the next level and continue forth.
+
+# Level 9 → 10
+
+The password for the next level is stored here in `data.txt`, inside one of the few human-readable strings. It is also preceded by several `=` characters. The chain of commands to run here is
+
+```
+bandit9@bandit:~$ strings data.txt | grep '==='
+x]T========== theG)"
+========== passwordk^
+========== is
+========== G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s
+```
+
+Here we use a new command called `strings` on `data.txt`. `strings` searches for and prints for any sequences of readable, printable characters larger than 4 characters long in the file given to it. We then pipe the result of this into `grep`. As `grep` is reading from stdin, there's no need to specify a file here. The query `'==='` finds any sequences of text which have at least three instances of `=` inside them. The result, as we can see, is a phrase roughly saying "the password is G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s". Thus, the password comes out to be `G7w8LIi6J3kTb8A7j9LgrywtEUlyyp6s`.
+
+# Level 10 → 11
+
+The password for this is stored in `data.txt` like before, but this time it is in base64, a simple data encoding algorithm. A base64 code typically looks like this
+
+```
+bandit10@bandit:~$ cat data.txt
+VGhlIHBhc3N3b3JkIGlzIDZ6UGV6aUxkUjJSS05kTllGTmI2blZDS3pwaGxYSEJNCg==
+```
+
+Here we use another new command, `base64`. It enables us to encode and decode base64 strings.
+
+```
+bandit10@bandit:~$ base64 -d data.txt
+The password is 6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM
+```
+
+We successfully obtain the password as `6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM`.
+
+# Level 11 → 12
+
+It is given that the password for the next level is stored in the file `data.txt`, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions. This is a common cipher, more famously known as *ROT-13*.
+
+```
+bandit11@bandit:~$ cat data.txt
+Gur cnffjbeq vf WIAOOSFzMjXXBC0KoSKBbJ8puQm5lIEi
+```
+
+We use the command `tr` to decode this.
+
+```
+bandit11@bandit:~$ tr 'A-Za-z' 'N-ZA-Mn-za-m' < data.txt
+The password is JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv
+```
+
+Here the conversion can be split into four parts.
+
+| The string | What alphabetical range `tr` interprets the string as                                                      |
+|------------|------------------------------------------------------------------------------------------------------------|
+| `A-Z`      | From the capital 'A' to capital 'Z'                                                                        |
+| `a-z`      | From the small 'a' to small 'z'                                                                            |
+| `N-ZA-M`   | Between the capital 'N' and capital 'Z', and subsequently the range between the capital 'A' to capital 'M' |
+| `n-za-m`   | Between the small 'n' and small 'z', and subsequently the range between the small 'a' to small 'm'         |
+
+We thus find the password for level 12 as `JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv`.
+
