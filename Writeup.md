@@ -35,7 +35,7 @@ We paste the password we were given (bandit0), and are dropped into a shell sess
 bandit0@bandit:~$
 ```
 
-# Level 0 -> Level 1
+# Level 0 → Level 1
 
 The password for Level 1 is stored as plaintext in a file called readme in the home directory. Thus, we use the `cat` shell utility to show it.
 
@@ -63,7 +63,7 @@ bandit1@bandit.labs.overthewire.org's password:
 
 We then input the password in (NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL), and thus get to Level 1.
 
-# Level 1 -> Level 2
+# Level 1 → Level 2
 
 Here the password is stored in a file called `-`. As the name is also the indicator for reading from stdin, simply running `cat -` does nothing here.
 We have to run a modified version of it.
@@ -75,7 +75,7 @@ rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 
 Here, the `./` indicates the current working directory, so `cat` knows its trying to read from a file instead of stdin. We use the password to login to bandit2, and successfully pass the first stage.
 
-# Level 2 -> Level 3
+# Level 2 → Level 3
 
 Here, the password is stored in a file called `spaces in this filename`.
 
@@ -98,7 +98,7 @@ aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 
 We ssh into the next level, enter the password given (aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG) into the prompt, and finish the second stage.
 
-# Level 3 -> 4
+# Level 3 → 4
 
 The password is said to be stored in a hidden file in the `inhere` directory. As hidden files are always prefixed with a `.` at the beginning of their filenames, we can the following command.
 
@@ -112,7 +112,7 @@ cat: inhere/..: Is a directory
 - The `inhere/` indicates that the file whose contents we want to output is in the `inhere` directory.
 - The `.*` is a `glob` matcher, which translates to *cat every file that starts with the character `.` and has an indefinite number of characters after it.* We use it for brevity's sake, as it sidesteps knowing the name of the file inside the `inhere` directory entirely. The only problem is the two error messages output by `cat`, indicating it tried to output the contents of a directory instead of a file.
 
-# Level 4 -> 5
+# Level 4 → 5
 
 The password is stored in the only human-readable file in the inhere directory. We use a new command, `file` here
 
@@ -130,7 +130,7 @@ inhere/-file08: data
 inhere/-file09: data
 ```
 
-The `file` command allows us to determine the file type of a file without directly using `cat` on it. We can see that there's only one file *(-file07)* with the label *ASCII text* attached to it, meaning it only contains human-readable characters. We cat the file and get the password for the next level.
+The `file` command allows us to determine the file type of a file without directly using `cat` on it. We can see that there's only one file (`-file07`) with the label *ASCII text* attached to it, meaning it only contains human-readable characters. We cat the file and get the password for the next level.
 
 ```
 bandit4@bandit:~$ cat inhere/-file07
