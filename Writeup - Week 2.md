@@ -10,7 +10,7 @@ bandit12@bandit:~$ cd /tmp/data
 bandit12@bandit:/tmp/data$
 ```
 
-Using cat on `data.txt`, we can see the hex data
+Using `cat` on `data.txt`, we can see the hex data
 ```
 bandit12@bandit:/tmp/data$ cat data.txt
 00000000: 1f8b 0808 6855 1e65 0203 6461 7461 322e  ....hU.e..data2.
@@ -356,5 +356,169 @@ vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
 closed
 ```
 
-It turns out to not be a password but an RSA private key, which can be used to log in to level 17.
+It turns out to not be a password but an RSA key, which can be used to log in to level 17. We copy it and save it to a local file.
 
+# Level 17 → 18
+
+We login to the server with the RSA key
+```
+ssh -i ../OTW/otw_17.key bandit17@bandit.labs.overthewire.org -p 2220
+```
+
+The password is given to be the only line changed between `passwords.old` and `passwords.new`. So, we use the `diff` command
+```
+bandit17@bandit:~$ ls
+passwords.new  passwords.old
+bandit17@bandit:~$ diff pass*
+42c42
+< hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg
+---
+> p6ggwdNHncnmCNxuAt0KtKVq185ZU7AW
+```
+
+Hence the password comes out to be `hga5tuuCLF6fFzUpnagiMN8ssu9LFrdg`.
+
+Logging into the server, we get the following result
+```
+~ $ ssh bandit18@bandit.labs.overthewire.org -p 2220
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+bandit18@bandit.labs.overthewire.org's password:
+.
+.
+.
+ in the following locations:
+
+    * gef (https://github.com/hugsy/gef) in /opt/gef/
+    * pwndbg (https://github.com/pwndbg/pwndbg) in /opt/pwndbg/
+    * peda (https://github.com/longld/peda.git) in /opt/peda/
+    * gdbinit (https://github.com/gdbinit/Gdbinit) in /opt/gdbinit/
+    * pwntools (https://github.com/Gallopsled/pwntools)
+    * radare2 (http://www.radare.org/)
+
+--[ More information ]--
+
+  For more information regarding individual wargames, visit
+  http://www.overthewire.org/wargames/
+
+  For support, questions or comments, contact us on discord or IRC.
+
+  Enjoy your stay!
+
+Byebye !
+Connection to bandit.labs.overthewire.org closed.
+```
+
+It seems someone modified the `.bashrc` to log us out whenever we attempt log in with SSH. To sidestep this, we use the `-t` flag to log in using `/bin/sh` instead of `/bin/bash`.
+
+```
+~ $ ssh bandit18@bandit.labs.overthewire.org -p 2220 -t /bin/sh
+                         _                     _ _ _
+                        | |__   __ _ _ __   __| (_) |_
+                        | '_ \ / _` | '_ \ / _` | | __|
+                        | |_) | (_| | | | | (_| | | |_
+                        |_.__/ \__,_|_| |_|\__,_|_|\__|
+
+
+                      This is an OverTheWire game server.
+            More information on http://www.overthewire.org/wargames
+
+bandit18@bandit.labs.overthewire.org's password:
+$
+```
+
+We are greeted to a plain shell, with none of the comfort features of bash.
+
+# Level 18 → 19
+
+The password is just stored in plaintext on a file named `readme`. As we've already logged in and bypassed the malicious `.bashrc`, we just need to run `cat` on `readme`.
+
+```
+$ cat readme
+awhqfNnAbc1naukrpqDYcF95h7HoMTrC
+```
+
+So the password for the next level is `awhqfNnAbc1naukrpqDYcF95h7HoMTrC`.
+
+# Level 19 → 20
+
+Here, we're given a setuid binary named `bandit20-do` that allows us to run commands as another user. We use this to access the password for `bandit20` directly
+```
+bandit19@bandit:~$ ./bandit20-do
+Run a command as another user.
+  Example: ./bandit20-do id
+bandit19@bandit:~$ ./bandit20-do cat /etc/bandit_pass/bandit20
+VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+```
+
+The password for level 20 turns out to be `VxCazJaVykI6W36BkBU0mJTCM8rR95XT`.
+
+# Level 20 → 21
+
+Here, we have an binary, `suconnect` which connects to the localhost on the port specified in the first argument, reads a line of text from it. If its equal to the password for `bandit20`, it transmits the password for `bandit21`.
+We `echo` the current password into the `nc` tool, setup a listener on a port, and run `suconnect` on the same port to get the password
+```
+bandit20@bandit:~$ echo VxCazJaVykI6W36BkBU0mJTCM8rR95XT | nc -l localhost 29000 &
+[1] 1852238
+bandit20@bandit:~$ ./suconnect 29000
+Read: VxCazJaVykI6W36BkBU0mJTCM8rR95XT
+Password matches, sending next password
+NvEJF7oVjkddltPSrdKEFOllh9V1IBcq
+[1]+  Done                    echo VxCazJaVykI6W36BkBU0mJTCM8rR95XT | nc -l localhost 29000
+```
+
+Here, the `-l` flag is used to setup a listener to `localhost` on port `29000`, `&` is used for running an app in the background, and `./suconnect 29000` for obtaining the password.
+
+The password comes out to be `NvEJF7oVjkddltPSrdKEFOllh9V1IBcq`.
+
+# Level 21 → 22
+
+We receive a hint to look into the `/etc/cron.d/` folder, so we `cat` all the files from the folder
+```
+bandit21@bandit:~$ cat /etc/cron.d/*
+* * * * * root /usr/bin/cronjob_bandit15_root.sh &> /dev/null
+* * * * * root /usr/bin/cronjob_bandit17_root.sh &> /dev/null
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+@reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+* * * * * root /usr/bin/cronjob_bandit25_root.sh &> /dev/null
+30 3 * * 0 root test -e /run/systemd/system || SERVICE_MODE=1 /usr/lib/x86_64-linux-gnu/e2fsprogs/e2scrub_all_cron
+10 3 * * * root test -e /run/systemd/system || SERVICE_MODE=1 /sbin/e2scrub_all -A -r
+cat: /etc/cron.d/otw-tmp-dir: Permission denied
+# The first element of the path is a directory where the debian-sa1
+# script is located
+PATH=/usr/lib/sysstat:/usr/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Activity reports every 10 minutes everyday
+5-55/10 * * * * root command -v debian-sa1 > /dev/null && debian-sa1 1 1
+
+# Additional run at 23:59 to rotate the statistics file
+59 23 * * * root command -v debian-sa1 > /dev/null && debian-sa1 60 2
+```
+
+We attempt to `cat` all the shell scripts with `bandit` in their name. Only `/usr/bin/cronjob_bandit22.sh` lets us.
+```
+bandit21@bandit:~$ cat /usr/bin/cronjob_bandit22.sh
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+```
+
+Running `cat` on the folder in the script, we get
+```
+bandit21@bandit:~$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
+```
+
+Therefore, `WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff` is the password for `bandit22`.
