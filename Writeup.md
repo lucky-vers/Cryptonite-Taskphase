@@ -155,6 +155,7 @@ The arguments are as follows
 
 - `.` indicates that we want `find` to search in the current directory.
 - `-type f` is to make it so the only results we see are of files `f`. If we wanted to find only directories, we would use `-type d` instead.
+- `-size 1033c` filters the results to files that are only 1033 (`1033`) bytes (`c`) large.
 - `! -executable` is a negation of the `-executable` argument, i.e. *"only show files that are \*not\* executable"*
 
 The results of the command are as follows.
@@ -170,6 +171,8 @@ We then perform `cat` on the file as usual.
 ```
 bandit5@bandit:~$ cat ./inhere/maybehere07/.file2
 P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
+
+
 
 
 
