@@ -96,6 +96,13 @@ bandit2@bandit:~$ cat "spaces in this filename"
 aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 ```
 
+We can also use backslashed spaces `\ ` instead.
+
+```
+bandit2@bandit:~$ cat spaces\ in\ this\ filename
+aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
+```
+
 We ssh into the next level, enter the password given (`aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG`) into the prompt, and finish the second stage.
 
 # Level 3 → 4
