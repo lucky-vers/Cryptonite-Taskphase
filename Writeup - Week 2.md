@@ -57,7 +57,7 @@ bandit12@bandit:/tmp/data$ cat data.txt
 A new command is to be used here, `xxd`
 ```
 bandit12@bandit:/tmp/data$ xxd -r data.txt >> data.bin
- ```
+```
 
 We use it with the `-r` to do a reverse hexdump — from hex data to binary data. We then transfer the output to `data.bin`.
 
