@@ -29,7 +29,7 @@ Once we log in, we're greeted with the following page
 bandit0@bandit.labs.overthewire.org's password:
 ```
 
-We paste the password we were given (`bandit0`), and are dropped into a shell session.
+We paste the password we were given (`bandit0`), and are dropped into a shell session
 
 ```
 bandit0@bandit:~$
@@ -37,14 +37,14 @@ bandit0@bandit:~$
 
 # Level 0 → Level 1
 
-The password for Level 1 is stored as plaintext in a file called readme in the home directory. Thus, we use the `cat` shell utility to show it.
+The password for Level 1 is stored as plaintext in a file called readme in the home directory. Thus, we use the `cat` shell utility to show it
 
 ```
 bandit0@bandit:~$ cat readme
 NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL
 ```
 
-The `cat` command simply outputs the contents of a file to the terminal. We run the same ssh command used for bandit0, but with the username being bandit1 instead.
+The `cat` command simply outputs the contents of a file to the terminal. We run the same ssh command used for bandit0, but with the username being bandit1 instead
 
 ```
 ~ $ ssh bandit1@bandit.labs.overthewire.org -p 2220
@@ -65,8 +65,7 @@ We then input the password in (`NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL`), and thus get
 
 # Level 1 → Level 2
 
-Here the password is stored in a file called `-`. As the name is also the indicator for reading from stdin, simply running `cat -` does nothing here.
-We have to run a modified version of it.
+Here the password is stored in a file called `-`. As the name is also the indicator for reading from stdin, simply running `cat -` does nothing here. We have to run a modified version of it
 
 ```
 bandit1@bandit:~$ cat ./-
@@ -89,14 +88,14 @@ cat: this: No such file or directory
 cat: filename: No such file or directory
 ```
 
-`cat` does not realize our arguments are but one. We thus wrap the filename around quotation marks to indicate that it's a single argument.
+`cat` does not realize our arguments are but one. We thus wrap the filename around quotation marks to indicate that it's a single argument
 
 ```
 bandit2@bandit:~$ cat "spaces in this filename"
 aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 ```
 
-We can also use backslashed spaces `\ ` instead.
+We can also use backslashed spaces `\ ` instead
 
 ```
 bandit2@bandit:~$ cat spaces\ in\ this\ filename
@@ -107,7 +106,7 @@ We ssh into the next level, enter the password given (`aBZ0W5EmUfAf7kHTQeOwd8bau
 
 # Level 3 → 4
 
-The password is said to be stored in a hidden file in the `inhere` directory. As hidden files are always prefixed with a `.` at the beginning of their filenames, we can the following command.
+The password is said to be stored in a hidden file in the `inhere` directory. As hidden files are always prefixed with a `.` at the beginning of their filenames, we can use the following command
 
 ```
 bandit3@bandit:~$ cat inhere/.*
@@ -137,7 +136,7 @@ inhere/-file08: data
 inhere/-file09: data
 ```
 
-The `file` command allows us to determine the file type of a file without directly using `cat` on it. We can see that there's only one file (`-file07`) with the label *ASCII text* attached to it, meaning it only contains human-readable characters. We cat the file and get the password for the next level.
+The `file` command allows us to determine the file type of a file without directly using `cat` on it. We can see that there's only one file (`-file07`) with the label `ASCII text` attached to it, meaning it only contains human-readable characters. We cat the file and get the password for the next level
 
 ```
 bandit4@bandit:~$ cat inhere/-file07
@@ -152,7 +151,7 @@ Here the specifications for the file containing the password are as follows
 - 1033 bytes in size
 - not executable
 
-We use a new shell utility called `find`, and construct the command as follows
+We use a new shell utility called `find`, and construct the command as given below
 
 ```
 find . -type f -size 1033c ! -executable
@@ -165,7 +164,7 @@ The arguments are as follows
 - `-size 1033c` filters the results to files that are only 1033 (`1033`) bytes (`c`) large.
 - `! -executable` is a negation of the `-executable` argument, i.e. *"only show files that are not (`!`) executable"*
 
-The results of the command are as follows.
+The result of the command is this
 
 
 ```
@@ -173,7 +172,7 @@ bandit5@bandit:~$ find . -type f -size 1033c ! -executable
 ./inhere/maybehere07/.file2
 ```
 
-We then perform `cat` on the file as usual.
+We then perform `cat` on the file as usual
 
 ```
 bandit5@bandit:~$ cat ./inhere/maybehere07/.file2
@@ -212,7 +211,7 @@ Thus, we clear the 6th stage.
 
 # Level 7 → 8
 
-The password for level 8 is stored in the file data.txt next to the word millionth. We take advantage of a new command, `grep` to find the password here. `grep` is essentially a search tool to find text in plaintext files quickly and easily.
+The password for level 8 is stored in the file data.txt next to the word millionth. We take advantage of a new command, `grep` to find the password here. `grep` is essentially a search tool to find text in plaintext files quickly and easily
 
 ```
 bandit7@bandit:~$ grep millionth data.txt
@@ -223,9 +222,7 @@ Here, `millionth` is the word we need to find, and `data.txt` the filename. As w
 
 # Level 8 → 9
 
-It is given here that the password for the next level is stored in the file data.txt and is the only line of text that occurs only once.
-
-We use a slightly more complicated *chain* of commands to find the result here.
+It is given here that the password for the next level is stored in the file data.txt and is the only line of text that occurs only once. We use a slightly more complicated *chain* of commands to find the result here.
 
 ```
 bandit8@bandit:~$ sort data.txt | uniq -c | sort -nr
@@ -272,7 +269,7 @@ bandit10@bandit:~$ cat data.txt
 VGhlIHBhc3N3b3JkIGlzIDZ6UGV6aUxkUjJSS05kTllGTmI2blZDS3pwaGxYSEJNCg==
 ```
 
-Here we use another new command, `base64`. It enables us to encode and decode base64 strings.
+Here we use another new command, `base64`. It enables us to encode and decode base64 strings
 
 ```
 bandit10@bandit:~$ base64 -d data.txt
@@ -283,14 +280,14 @@ We successfully obtain the password as `6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM`.
 
 # Level 11 → 12
 
-It is given that the password for the next level is stored in the file `data.txt`, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions. This is a common cipher, more famously known as *ROT-13*.
+It is given that the password for the next level is stored in the file `data.txt`, where all lowercase (a-z) and uppercase (A-Z) letters have been rotated by 13 positions. This is a common cipher, more famously known as *ROT-13*
 
 ```
 bandit11@bandit:~$ cat data.txt
 Gur cnffjbeq vf WIAOOSFzMjXXBC0KoSKBbJ8puQm5lIEi
 ```
 
-We use the command `tr` to decode this.
+We use the command `tr` to decode this
 
 ```
 bandit11@bandit:~$ tr 'A-Za-z' 'N-ZA-Mn-za-m' < data.txt
