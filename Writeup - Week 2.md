@@ -507,7 +507,7 @@ PATH=/usr/lib/sysstat:/usr/sbin:/usr/sbin:/usr/bin:/sbin:/bin
 59 23 * * * root command -v debian-sa1 > /dev/null && debian-sa1 60 2
 ```
 
-We attempt to `cat` all the shell scripts with `bandit` in their name. Only `/usr/bin/cronjob_bandit22.sh` lets us.
+We attempt to `cat` all the shell scripts with `bandit` in their name. Only `/usr/bin/cronjob_bandit22.sh` lets us without throwing any permission errors.
 ```
 bandit21@bandit:~$ cat /usr/bin/cronjob_bandit22.sh
 #!/bin/bash
@@ -515,7 +515,7 @@ chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 ```
 
-Running `cat` on the folder in the script, we get
+Running `cat` on the file mentioned in the script, we get
 ```
 bandit21@bandit:~$ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 WdDozAdTM2z9DiFEQ2mGlwngMfj4EZff
