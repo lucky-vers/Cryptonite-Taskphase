@@ -2,7 +2,7 @@
 
 The password for this is stored in a hexdump of a file `data.txt` that has been repeatedly compressed.
 
-We first copy the file, and move it to a newly created directory `/tmp/data`.
+We first copy the file, and move it to a newly created directory `/tmp/data`
 
 ```
 bandit12@bandit:~$ mkdir /tmp/data
@@ -59,7 +59,7 @@ A new command is to be used here, `xxd`
 bandit12@bandit:/tmp/data$ xxd -r data.txt >> data.bin
 ```
 
-We use it with the `-r` to do a reverse hexdump — from hex data to binary data. We then transfer the output to `data.bin`.
+We use it with the `-r` to do a reverse hexdump — from hex data to binary data. We then transfer the output to `data.bin`
 
 Running the `file` command on `data.bin`, we get
 ```
@@ -103,7 +103,7 @@ bandit12@bandit:/tmp/data$ file data.out
 data.out: gzip compressed data, was "data4.bin", last modified: Thu Oct  5 06:19:20 2023, max compression, from Unix, original size modulo 2^32 20480
 ```
 
-Another gzip archive. We follow the same steps used in the previous bzip files.
+Another gzip archive. We follow the same steps used in the previous bzip files
 ```
 bandit12@bandit:/tmp/data$ mv data.out data.gz
 bandit12@bandit:/tmp/data$ gzip -d data.gz
@@ -124,7 +124,7 @@ bandit12@bandit:/tmp/data$ ls
 data  data5.bin  data.txt
 ```
 
-Here the `x` argument signifies that we want to extract the archive, and `f` means the next argument will be the file to be extracted.
+Here the `x` argument signifies that we want to extract the archive, and `f` means the next argument will be the file to be extracted
 
 `data5.bin` is again a tarball
 ```
