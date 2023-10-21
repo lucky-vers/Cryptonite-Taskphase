@@ -29,7 +29,7 @@ Once we log in, we're greeted with the following page
 bandit0@bandit.labs.overthewire.org's password:
 ```
 
-We paste the password we were given **(bandit0)**, and are dropped into a shell session.
+We paste the password we were given (`bandit0`), and are dropped into a shell session.
 
 ```
 bandit0@bandit:~$
@@ -61,7 +61,7 @@ The `cat` command simply outputs the contents of a file to the terminal. We run 
 bandit1@bandit.labs.overthewire.org's password:
 ```
 
-We then input the password in **(NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL)**, and thus get to Level 1.
+We then input the password in (`NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL`), and thus get to Level 1.
 
 # Level 1 → Level 2
 
@@ -96,7 +96,7 @@ bandit2@bandit:~$ cat "spaces in this filename"
 aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG
 ```
 
-We ssh into the next level, enter the password given **(aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG)** into the prompt, and finish the second stage.
+We ssh into the next level, enter the password given (`aBZ0W5EmUfAf7kHTQeOwd8bauFJ2lAiG`) into the prompt, and finish the second stage.
 
 # Level 3 → 4
 
@@ -110,7 +110,7 @@ cat: inhere/..: Is a directory
 ```
 
 - The `inhere/` indicates that the file whose contents we want to output is in the `inhere` directory.
-- The `.*` is a `glob` matcher, which translates to *cat every file that starts with the character `.` and has an indefinite number of characters after it.* We use it for brevity's sake, as it sidesteps knowing the name of the file inside the `inhere` directory entirely. The only problem is the two error messages output by `cat`, indicating it tried to output the contents of a directory instead of a file.
+- The `.*` is a `glob` matcher, which translates to *"cat every file that starts with the character `.` and has an indefinite number of characters after it."* We use it for brevity's sake, as it sidesteps knowing the name of the file inside the `inhere` directory entirely. The only problem is the two error messages output by `cat`, indicating it tried to output the contents of a directory instead of a file.
 
 # Level 4 → 5
 
@@ -137,3 +137,45 @@ bandit4@bandit:~$ cat inhere/-file07
 lrIWWI6bB37kxfiCQZqUdOIYfr6eEeqR
 ```
 
+# Level 5 → 6
+
+Here the specifications for the file containing the password are as follows
+
+- human-readable
+- 1033 bytes in size
+- not executable
+
+We use a new shell utility called `find`, and construct the command as follows
+
+```
+find . -type f -size 1033c ! -executable
+```
+
+The arguments are as follows
+
+- `.` indicates that we want `find` to search in the current directory.
+- `-type f` is to make it so the only results we see are of files `f`. If we wanted to find only directories, we would use `-type d` instead.
+- `! -executable` is a negation of the `-executable` argument, i.e. *"only show files that are \*not\* executable"*
+
+The results of the command are as follows.
+
+
+```
+bandit5@bandit:~$ find . -type f -size 1033c ! -executable
+./inhere/maybehere07/.file2
+```
+
+We then perform `cat` on the file as usual.
+
+```
+bandit5@bandit:~$ cat ./inhere/maybehere07/.file2
+P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU
+
+
+
+
+
+
+```
+
+The password is revealed to be `P4L4vucdmLnm8I7Vl7jG1ApGSfjYKqJU`.
