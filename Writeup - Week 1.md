@@ -35,7 +35,7 @@ We paste the password we were given (`bandit0`), and are dropped into a shell se
 bandit0@bandit:~$
 ```
 
-# Level 0 → Level 1
+# Level 0 → 1
 
 The password for Level 1 is stored as plaintext in a file called readme in the home directory. Thus, we use the `cat` shell utility to show it
 
@@ -63,7 +63,7 @@ bandit1@bandit.labs.overthewire.org's password:
 
 We then input the password in (`NH2SXQwcBdpmTEzi3bvBHMM9H66vVXjL`), and thus get to Level 1.
 
-# Level 1 → Level 2
+# Level 1 → 2
 
 Here the password is stored in a file called `-`. As the name is also the indicator for reading from stdin, simply running `cat -` does nothing here. We have to run a modified version of it
 
@@ -74,7 +74,7 @@ rRGizSaX8Mk1RTb1CNQoXTcYZWU6lgzi
 
 Here, the `./` indicates the current working directory, so `cat` knows its trying to read from a file instead of stdin. We use the password to login to bandit2, and successfully pass the first stage.
 
-# Level 2 → Level 3
+# Level 2 → 3
 
 Here, the password is stored in a file called `spaces in this filename`.
 
