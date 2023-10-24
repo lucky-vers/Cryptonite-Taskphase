@@ -195,7 +195,7 @@ find / -size 33c -user bandit7 -group bandit6 2>/dev/null
 ```
 
 - `/` tells find that we want to search the entire filesystem, i.e. the root directory, for the file.
-- `-size 33c` means the file's size has to be exactly 33 bytes long.
+- `-size 33c` means the file's size has to be exactly 33 bytes (`c`) long.
 - `-user bandit7` and `-group bandit6` filter for only those files owned by user bandit7 and group bandit6, respectively.
 - `2>/dev/null` removes any error messages that might show up while running the command, e.g. `permission denied` errors. `2` is the indicator for the error stream `stderr`, and `>/dev/null` means we are redirecting it to the null device, i.e. discarding its output.
 
