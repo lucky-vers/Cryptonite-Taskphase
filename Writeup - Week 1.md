@@ -235,11 +235,11 @@ bandit8@bandit:~$ sort data.txt | uniq -c | sort -nr
      10 18DyjwhN856SsMx8bNrFSvr6rJxNQKhE
       1 EN632PlfYiZbn3PhVK3XOGSlNInNE00t
 ```
+We should take an aside to talk about piping. Unix pipes, represented by the `|` character essentially take the standard output of the command on the left side of the pipe, and feed it into the standard input of the command on the right. This is convenient for complex text processing, as no mediator variables need to be assigned here.
 
 The logic behind this is as follows
 
 - `sort data.txt` uses the `sort` program to arrange all the lines in the file `data.txt` alphabetically. This has the added effect of grouping together similar strings.
-- Unix pipes such as `|` essentially take the standard output of the command on the left side of the pipe, and feed it into the standard input of the command on the right. This is convenient for complex text processing, as no mediator variables need to be assigned here.
 - `sort -nr` has two flags in one, `-n` and `-r`. This modifies `sort` to arrange lines by their numeric increasing order instead of alphabetical, and `-r` simply reverses the order of the output from increasing order to decreasing order. This is done for convenience's sake as we won't have to scroll up the terminal to find the one line with a `1` on its left side.
 
 The `uniq -c | sort -nr` commands can also be replaced by a single command, `uniq -u`. The `-u` flag makes it so that uniq only prints unique lines, i.e. lines with only one instance in the text stream.
