@@ -136,7 +136,7 @@ inhere/-file08: data
 inhere/-file09: data
 ```
 
-Here, `inhere/*` means we're runnign `file` on every file inside the `inhere` directory. The `file` command allows us to determine the file type of a file without directly using `cat` on it. We can see that there's only one file (`-file07`) with the label `ASCII text` attached to it, meaning it only contains human-readable characters. We cat the file and get the password for the next level
+Here, `inhere/*` means we're running `file` on every file inside the `inhere` directory. The `file` command allows us to determine the file type of a file without directly using `cat` on it. We can see that there's only one file (`-file07`) with the label `ASCII text` attached to it, meaning it only contains human-readable characters. We cat the file and get the password for the next level
 
 ```
 bandit4@bandit:~$ cat inhere/-file07
