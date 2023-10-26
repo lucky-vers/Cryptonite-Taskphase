@@ -58,7 +58,7 @@ A new command is to be used here, `xxd`
 bandit12@bandit:/tmp/data$ xxd -r data.txt >> data.bin
 ```
 
-We use it with the `-r` to do a reverse hexdump — from hex data to binary data. We then transfer the output to `data.bin`
+We use it with the `-r` to do a reverse hexdump — from hex data to binary data. We then transfer the output to `data.bin`, the `.bin` extension indicating that it is a generic binary file we don't know the type of yet.
 
 Running the `file` command on `data.bin`, we get
 ```
