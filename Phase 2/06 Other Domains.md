@@ -22,16 +22,16 @@ It seems to be the flag with the letters encoded as their positions in the alpha
 
 int main()
 {
-	int numbers[] = {
-		16, 9, 3, 15, 3,  20, 6, // The part before the brackets
-		20, 8, 5, 14, 21, 13, 2, 5, 18, 19, 13, 1, 19, 15, 14 // The part before the brackets
-	};
+    int numbers[] = {
+        16, 9, 3, 15, 3,  20, 6, // The part before the brackets
+        20, 8, 5, 14, 21, 13, 2, 5, 18, 19, 13, 1, 19, 15, 14 // The part before the brackets
+    };
 
-	for (int i = 0; i < 22; i++) {
-		printf("%c", numbers[i] + 65);
-	}
+    for (int i = 0; i < 22; i++) {
+        printf("%c", numbers[i] + 65);
+    }
 
-	return 0;
+    return 0;
 }
 ```
 
