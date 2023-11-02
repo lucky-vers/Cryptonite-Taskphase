@@ -145,4 +145,30 @@ Welcome to the Arcane Calculator, tron!
 
 # GDB baby step 0
 
+**Flag:** `picoCTF{549698}`
+
+We're given a binary `debugger0_a` and our task is to figure out the value of the register `eax` at the end. We can use the program `objdump` with the `-D` flag for this
+
+```
+~/Downloads $ chmod +x debugger0_a
+~/Downloads $ objdump -D debugger0_a | less
+```
+
+Searching for the main function `main:`, we get
+
+```
+0000000000001129 <main>:
+    1129:       f3 0f 1e fa             endbr64
+    112d:       55                      push   %rbp
+    112e:       48 89 e5                mov    %rsp,%rbp
+    1131:       89 7d fc                mov    %edi,-0x4(%rbp)
+    1134:       48 89 75 f0             mov    %rsi,-0x10(%rbp)
+    1138:       b8 42 63 08 00          mov    $0x86342,%eax
+    113d:       5d                      pop    %rbp
+    113e:       c3                      ret
+    113f:       90                      nop
+```
+
+The value finally in `eax` is therefore 0x86342 in hexadecimal, or `549698` in decimal.
+
 # ARMssembly 0
