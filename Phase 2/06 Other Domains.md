@@ -1,99 +1,46 @@
-# Domain: General Skills
+# Domain: Cryptography
 
-## Magikarp Ground Mission
+## Mod 26
 
-We press the `START INSTANCE` button and are given an ssh command to enter
+**Flag:** `picoCTF{next_time_I'll_try_2_rounds_of_rot13_ulYvpVag}`
 
-```
-ssh ctf-player@venus.picoctf.net -p 52353
-```
+We are given the flag as `cvpbPGS{arkg_gvzr_V'yy_gel_2_ebhaqf_bs_ebg13_hyLicInt}`. This is a simple `ROT-13` cipher, a special case of the Caesar cipher in which the letters are shifted by 13 positions.
+Putting this into any online `ROT-13` decoder (I used *https://rot13.com/*), we get `picoCTF{next_time_I'll_try_2_rounds_of_rot13_ulYvpVag}`.
 
-It's given that we need to login as `ctf-player` with the password `a13b7f9d`. Once we do, we're greeted to this
+## The Numbers
 
-```
-ctf-player@venus.picoctf.net's password:
-Welcome to Ubuntu 18.04.5 LTS (GNU/Linux 5.4.0-1041-aws x86_64)
+**Flag:** `PICOCTF{THENUMBERSMASON}`
 
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/advantage
-This system has been minimized by removing packages and content that are
-not required on a system that users do not log into.
+We're given an image with a list of numbers along with opening and closing brackets.
 
-To restore this content, you can run the 'unminimize' command.
+![The Numbers](../Images/the_numbers.png)
 
-The programs included with the Ubuntu system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-applicable law.
-
-ctf-player@pico-chall$
-```
-
-Running `ls`, we get
+It seems to be the flag with the letters encoded as their positions in the alphabet. We write some simple C code to decode it
 
 ```
-ctf-player@pico-chall$ ls
-1of3.flag.txt  instructions-to-2of3.txt
+#include <stdio.h>
+
+int main()
+{
+	int numbers[] = {
+		16, 9, 3, 15, 3,  20, 6, // The part before the brackets
+		20, 8, 5, 14, 21, 13, 2, 5, 18, 19, 13, 1, 19, 15, 14 // The part before the brackets
+	};
+
+	for (int i = 0; i < 22; i++) {
+		printf("%c", numbers[i] + 65);
+	}
+
+	return 0;
+}
 ```
 
-Using `cat`, we get the first part of the flag and instructions to the next part
-
+Compiling and running it, we get
 ```
-ctf-player@pico-chall$ cat *.txt
-picoCTF{xxsh_
-Next, go to the root of all things, more succinctly `/`
-```
-
-So we go to the root folder using `cd`
-
-```
-ctf-player@pico-chall$ cd /
-ctf-player@pico-chall$ ls
-2of3.flag.txt  bin  boot  dev  etc  home  instructions-to-3of3.txt  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+~/Projects $ gcc main.c -o main
+~/Projects $ ./main
+QJDPDUGUIFOVNCFSTNBTPO
+~/Projects $
 ```
 
-We see two `.txt` files. Running `cat` on them, we get the second part of the flag
-
-```
-ctf-player@pico-chall$ cat *.txt
-0ut_0f_\/\/4t3r_
-Lastly, ctf-player, go home... more succinctly `~`
-```
-
-So we go to the home directory. Running `cd` with no arguments takes us there
-
-```
-ctf-player@pico-chall$ cd
-ctf-player@pico-chall$ ls
-3of3.flag.txt  drop-in
-```
-
-Running `cat` for the third time, we get
-
-```
-ctf-player@pico-chall$ cat *.txt
-71be5264}
-```
-
-As the third part of the flag.
-
-Combining all the parts, we get the flag as `picoCTF{xxsh_` + `0ut_0f_\/\/4t3r_` + `71be5264}` = `picoCTF{xxsh_0ut_0f_\/\/4t3r_71be5264}`
-
-**Flag:** `picoCTF{xxsh_0ut_0f_\/\/4t3r_71be5264}`
-
-## 2Warm
-
-The problem statement here is simple— to convert the number 42 from base 10 to binary. We use the `bc` (basic calculator) command for this
-
-```
-~ $ echo "obase=2; 42" | bc
-101010
-```
-
-Here, we're setting the `obase` variable to 2, indicating we want to convert the decimal integer to its binary form. As a result, we get `101010`. Thus, our flag becomes `picoCTF{101010}`.
-
-**Flag:** `picoCTF{xxsh_0ut_0f_\/\/4t3r_71be5264}`
-
+This seems to be a Caesar cipher. Using the solver on [dcode](https://www.dcode.fr/caesar-cipher) and decrypting it using brute-force, we get the answer as `PICOCTFTHENUMBERSMASON`.
