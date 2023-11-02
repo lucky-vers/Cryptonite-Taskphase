@@ -83,3 +83,17 @@ As the third part of the flag.
 Combining all the parts, we get the flag as `picoCTF{xxsh_` + `0ut_0f_\/\/4t3r_` + `71be5264}` = `picoCTF{xxsh_0ut_0f_\/\/4t3r_71be5264}`
 
 **Flag:** `picoCTF{xxsh_0ut_0f_\/\/4t3r_71be5264}`
+
+## 2Warm
+
+The problem statement here is simple— to convert the number 42 from base 10 to binary. We use the `bc` (basic calculator) command for this
+
+```
+~ $ echo "obase=2; 42" | bc
+101010
+```
+
+Here, we're setting the `obase` variable to 2, indicating we want to convert the decimal integer to its binary form. As a result, we get `101010`. Thus, our flag becomes `picoCTF{101010}`.
+
+**Flag:** `picoCTF{xxsh_0ut_0f_\/\/4t3r_71be5264}`
+
