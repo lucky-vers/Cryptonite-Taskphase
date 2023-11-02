@@ -68,7 +68,7 @@ G0X1.1034Y3.8621
 .
 ```
 
-These, as it turns out, are G-code instructions. G-code is a programming language specially designed for the control CNC machines and 3D printers. Using an online G-code interpreter such as [NCViewer](https://ncviewer.com/), we get the following image.
+These, as it turns out, are G-code instructions. G-code is a programming language specially designed for the control of CNC machines and 3D printers. Using an online G-code interpreter such as [NCViewer](https://ncviewer.com/), we get the following image.
 
 ![The Flag](../Images/gcode.png)
 
