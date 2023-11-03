@@ -13,7 +13,7 @@ e: 3
 ciphertext (c): 2205316413931134031074603746928247799030155221252519872650080519263755075355825243327515211479747536697517688468095325517209911688684309894900992899707504087647575997847717180766377832435022794675332132906451858990782325436498952049751141
 ```
 
-It looks like a simple RSA encrypted cipher text. Notice the small value of `e` (3). It ideally should be something much larger like `65537` or the cipher can be easily brute-forced. We do exactly that, using the [dcode RSA decryptor](https://www.dcode.fr/rsa-cipher)
+It looks like a simple RSA encrypted cipher text. Notice the small value of `e` (3). It ideally should be something much larger like 65537 or the cipher can be easily brute-forced. We do exactly that, using the [dcode RSA decryptor](https://www.dcode.fr/rsa-cipher)
 
 ![Result](../Images/minirsa.png)
 
@@ -27,7 +27,7 @@ In this challenge, a message is to be decrypted in the following fashion:
 2. The subsequent remainders are then used as indices in the following manner:
     - Digits 0 to 25 are mapped as the uppercase alphabet.
     - Digits 26 to 35 are mapped as the ten digits.
-    - 36 is an underscored `_`.
+    - 36 is an underscore (`_`).
 
 The python code for the decoding using this algorithm is this
 
