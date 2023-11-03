@@ -174,3 +174,80 @@ Here, the instruction `mov $0x86342,%eax` is of interest to us here. In simple t
 The value finally in `eax` is therefore 0x86342 in hexadecimal, or `549698` in decimal.
 
 # ARMssembly 0
+
+**Flag:** `picoCTF{5EE79C2B}`
+
+We're given an (ARM) assembly source file `chall.s`. The structure is as follows
+
+```
+main:
+    stp x29, x30, [sp, -48]!
+    add x29, sp, 0
+    str x19, [sp, 16]
+    str w0, [x29, 44]
+    str x1, [x29, 32]
+    ldr x0, [x29, 32]
+    add x0, x0, 8
+    ldr x0, [x0]
+    bl  atoi
+    mov w19, w0
+    ldr x0, [x29, 32]
+    add x0, x0, 16
+    ldr x0, [x0]
+    bl  atoi
+    mov w1, w0
+    mov w0, w19
+    bl  func1
+```
+
+Here, the two arguments provided to the file `266134863` and `1592237099` are converted to integers via the `atoi` function and stored in the registers `w0` and `w1` respectively.
+It then branches to the `func1` code block, which has the following code
+
+```
+func1:
+    sub	sp, sp, #16
+    str	w0, [sp, 12]
+    str	w1, [sp, 8]
+    ldr	w1, [sp, 12]
+    ldr w0, [sp, 8]
+    cmp w1, w0
+    bls .L2
+    ldr w0, [sp, 12]
+    b  .L3
+```
+
+In this, `w0` and `w1` are compared. If `w1` is lesser than or equal to `w0`, it branches to `.L2`. If not, it loads the value stored at the address 12 bytes offset (essentially the integer value of `w0`) from the stack pointer into `w0`, and then branches to `.L3`.
+
+Since `w1` (1592237099) is greater than `w0` (266134863), the code branches to `.L3`
+
+```
+.LC3:
+    add sp, sp, 16
+    ret
+```
+
+This just adds 16 to the stack pointer.
+
+After this, the `.main` function continues
+
+```
+    mov  w1, w0
+    adrp x0, .LC0
+    add  x0, x0, :lo12:.LC0
+    bl   printf
+.
+.
+.
+```
+
+This copies the value in `w0` to `w1`. It then prints using `printf` the value at `w0`.
+
+So, the result of this code will be `Result: 1592237099`.
+
+Converting the numerical value to hexacdecimal, we get `5EE79C2B`
+
+```
+~ $ printf "%X\n" 1592237099
+5EE79C2B
+```
+
