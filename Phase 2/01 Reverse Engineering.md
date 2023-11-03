@@ -1,6 +1,6 @@
 # keygenme-py
 
-**Key:** `picoCTF{1n_7h3_|<3y_of_ac73dc29}`
+**Flag:** `picoCTF{1n_7h3_|<3y_of_ac73dc29}`
 
 For this, we're given a file `keygenme-trial.py`. In its source code block, we're given the following variable declarations
 

@@ -4,7 +4,7 @@
 
 # basic-mod1
 
-**Key:** `picoCTF{R0UND_N_R0UND_ADD17EC2}`
+**Flag:** `picoCTF{R0UND_N_R0UND_ADD17EC2}`
 
 In this challenge, a message is to be decrypted in the following fashion:
 
