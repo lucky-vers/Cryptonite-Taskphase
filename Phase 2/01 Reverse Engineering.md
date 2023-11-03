@@ -169,6 +169,8 @@ Searching for the main function `main:`, we get
     113f:       90                      nop
 ```
 
+Here, the instruction `mov $0x86342,%eax` is of interest to us here. In simple terms, it means the hexadecimal number `0x86342` is being set (`mov`) as the value for the register `eax`.
+
 The value finally in `eax` is therefore 0x86342 in hexadecimal, or `549698` in decimal.
 
 # ARMssembly 0
