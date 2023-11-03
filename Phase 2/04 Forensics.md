@@ -2,6 +2,99 @@
 
 # Trivial Flag Transfer Protocol
 
+**Flag:** `picoCTF{h1dd3n_1n_pLa1n_51GHT_18375919}`
+
+We get a file `tftp.pcapng`. Opening it in `wireshark`, we extract all the files transferred using the `TFTP` protocol.
+
+![Wireshark extraction](../Images/wireshark_extraction.png)
+
+In the file `instructions.txt`, the message is `GSGCQBRFAGRAPELCGBHEGENSSVPFBJRZHFGQVFTHVFRBHESYNTGENAFSRE.SVTHERBHGNJNLGBUVQRGURSYNTNAQVJVYYPURPXONPXSBEGURCYNA.`, and seems to be a `ROT-13` cipher. And indeed, decoding it we get
+
+![The decrypted message](../Images/wireshark_instructions_message_decrypted.png)
+
+Removing the spaces, the instructions seem to be
+
+*"TFTP doesn't encrypt our traffic so we must disguise our flag transfer. Figure out a way to hide the flag and I will check back for the plan."*
+
+In the file `plan`, we follow the same process
+
+![Another file](../Images/theplan.png)
+
+Using the same method we did earlier with `ROT-13`, we get the final message as
+
+*"I used the program and hid it with - due diligence. Check out the photos."*
+
+We also have three images and a `.deb` file
+
+```
+~/Downloads $ ls -1
+instructions.txt
+picture1.bmp
+picture2.bmp
+picture3.bmp
+plan
+program.deb
+tftp.pcapng
+```
+
+Extracting the `.deb` package, we're greeted to three new files
+
+```
+~/Downloads/program $ ar x program.deb
+~/Downloads/program $ ls -1
+control.tar.gz
+data.tar.xz
+debian-binary
+program.deb
+```
+
+Extracting `data.tar.xz`, we discover that the program being used was `steghide`
+
+```
+~/Downloads/program $ atool -x data.tar.xz
+.
+.
+.
+./usr/share/locale/fr/
+./usr/share/locale/fr/LC_MESSAGES/
+./usr/share/locale/fr/LC_MESSAGES/steghide.mo
+./usr/share/locale/de/
+./usr/share/locale/de/LC_MESSAGES/
+./usr/share/locale/de/LC_MESSAGES/steghide.mo
+./usr/share/locale/es/
+./usr/share/locale/es/LC_MESSAGES/
+./usr/share/locale/es/LC_MESSAGES/steghide.mo
+./usr/bin/
+./usr/bin/steghide
+data.tar.xz: extracted to `usr'
+```
+
+`steghide` requires a passphrase to extract data from images. Remember the sentence
+
+> IUSEDTHEPROGRAMANDHIDITWITH-DUEDILIGENCE.CHECKOUTTHEPHOTOS.
+
+This seems to hint at the passphrase being `DUEDILIGENCE`. Trying it on the three images, we get the following results
+
+```
+~/Downloads $ steghide --extract -sf picture1.bmp
+Enter passphrase:
+steghide: could not extract any data with that passphrase!
+~/Downloads $ steghide --extract -sf picture2.bmp
+Enter passphrase:
+steghide: could not extract any data with that passphrase!
+~/Downloads $ steghide --extract -sf picture3.bmp
+Enter passphrase:
+wrote extracted data to "flag.txt".
+```
+
+And now using `cat` on the flag file, we get
+
+
+```
+~/Downloads $ cat flag.txt
+picoCTF{h1dd3n_1n_pLa1n_51GHT_18375919}
+```
+
 # MacroHard WeakEdge
 
 **Flag:** `picoCTF{D1d_u_kn0w_ppts_r_z1p5}`
