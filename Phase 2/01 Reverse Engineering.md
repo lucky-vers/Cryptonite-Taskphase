@@ -64,7 +64,6 @@ There's also a function `check_key` that presumably we need to test with to chec
 
         if key[i] != hashlib.sha256(username_trial).hexdigest()[8]:
             return False
-
 ```
 
 So it seems it checks whether the dynamic part of the given key is equal to the combination of elements of the variable `hashlib.sha256(username_trial).hexdigest()` with the following indices:
