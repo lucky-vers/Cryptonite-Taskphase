@@ -1,5 +1,109 @@
 # New Caesar
 
+**Flag:** `picoCTF{et_tu?_07d5c0892c1438d2b32600e83dc2b0e5}`
+
+In this, we're given an encrypted mesage `dcebcmebecamcmanaedbacdaanafagapdaaoabaaafdbapdpaaapadanandcafaadbdaapdpandcac` and a file `new_caesar.py`. The latter's contents are
+
+```
+import string
+
+LOWERCASE_OFFSET = ord("a")
+ALPHABET = string.ascii_lowercase[:16]
+
+def b16_encode(plain):
+    enc = ""
+    for c in plain:
+        binary = "{0:08b}".format(ord(c))
+        enc += ALPHABET[int(binary[:4], 2)]
+        enc += ALPHABET[int(binary[4:], 2)]
+    return enc
+
+def shift(c, k):
+    t1 = ord(c) - LOWERCASE_OFFSET
+    t2 = ord(k) - LOWERCASE_OFFSET
+    return ALPHABET[(t1 + t2) % len(ALPHABET)]
+
+flag = "redacted"
+key = "redacted"
+assert all([k in ALPHABET for k in key])
+assert len(key) == 1
+
+b16 = b16_encode(flag)
+enc = ""
+for i, c in enumerate(b16):
+    enc += shift(c, key[i % len(key)])
+print(enc)
+```
+
+It looks like the encryption algorithm follows multiple steps:
+
+1. The flag is converted into base16 using the function `b16_encode`.
+2. The flag is then shifted by changing it to the value in `ALPHABET` of the index calculated by adding the alphabetical positions of the one-character key and flag, dividing it by the length of `ALPHABET` (i.e. 16), and finding its remainder.
+
+To decrypt the message, we simply have to follow the opposite of the steps described above
+
+```
+import string
+
+LOWERCASE_OFFSET = ord("a")
+ALPHABET = string.ascii_lowercase[:16]
+
+def unshift(c, k):
+    t1 = ord(c) - LOWERCASE_OFFSET
+    t2 = ord(k) - LOWERCASE_OFFSET
+    return ALPHABET[(t1 - t2) % 16]
+
+def decode(enc):
+    dec = ""
+    for i in range(0, len(enc), 2):
+        binary = "{0:04b}{1:04b}".format(ALPHABET.index(enc[i]), ALPHABET.index(enc[i+1]))
+        dec += chr(int(binary, 2))
+    return dec
+
+flag = "dcebcmebecamcmanaedbacdaanafagapdaaoabaaafdbapdpaaapadanandcafaadbdaapdpandcac"
+
+for key in ALPHABET:
+    b16 = ""
+    for c in flag:
+        b16 += unshift(c, key)
+    print(decode(b16))
+```
+
+Here, we first run a for loop for every possible key from 'a' to 'p'.
+
+Next, we unshift the characters using the `unshift` function. In it, we do the reverse of what the `shift` function did— subtracting the position of the key from each character, modding it with the length of the alphabet (16), and finally returning the value stored at its index in `ALPHABET`.
+
+Finally, we decode the unshifted key (`b16`). This occurs by taking each pair of characters, finding their indices within `ALPHABET`, converting them to binary and then ASCII.
+
+Running the code, we get the following results
+
+```
+~/Downloads $ python3 decode.py
+2A,AB
+210? ,
+!01ûó ñ/üôõþ/ýðÿô þ.ÿþòüü!ôÿ /þ.ü!ñ
+/
+/ ê
+ëâàëãäíìïîãíîíáëëãîíëà
+ÛÞÝÒÜß
+Ü    ÝÜÐÚÚÒÝ
+ Úß
+ÈèÉÀýÎüÉÁÂËüÊÍÌÁýËûÌËÏÉÉþÁÌýüËûÉþÎ
+íü×üý·×¸¿ì½ë¸°±ºë¹¼»°ìºê»º¾¸¸í°»ìëºê¸í½
+ÜëÆëì¦Æ§®Û¬Ú§¯ ©Ú¨«ª¯Û©Ùª©­§§Ü¯ªÛÚ©Ù§Ü¬
+ËÚµÚÛµÊÉÉÊÈËÊÉÈË
+ºÉ¤ÉÊ¤¹¸¸¹·º¹¸·º
+©¸¸¹st{¨y§t|}v§uxw|¨v¦wvztt©|w¨§v¦t©y
+§§¨bcjhckledgfkefeicckfech
+qQqRYWRZ[TSVUZTUTXRRZUTRW
+v`@`AHuFtAIJCtBEDIuCsDCGAAvIDutCsAvF
+et_tu?_07d5c0892c1438d2b32600e83dc2b0e5
+TcNcd.N/&S$R/'(!R #"'S!Q"!%//T'"SR!Q/T$
+CR=RS=BAAB@CBA@C
+```
+
+The only decoding with real words seems to be `et_tu?_07d5c0892c1438d2b32600e83dc2b0e5`. We check it by wrapping it with `picoCTF{}`, and its correct.
+
 # miniRSA
 
 **Flag:** `picoCTF{n33d_a_lArg3r_e_d0cd6eae}`
