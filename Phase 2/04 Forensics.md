@@ -1,5 +1,82 @@
 # tunn3l v1s10n
 
+**Flag:** `picoCTF{qu1t3_a_v13w_2020}`
+
+We're given a file `tunn3l_v1s10n`. Running `exiftool` on it gives us the following information about it
+
+```
+~/Downloads $ exiftool tunn3l_v1s10n
+ExifTool Version Number         : 12.60
+File Name                       : tunn3l_v1s10n
+Directory                       : .
+File Size                       : 2.9 MB
+File Modification Date/Time     : 2023:11:05 20:32:44+05:30
+File Access Date/Time           : 2023:11:05 20:32:44+05:30
+File Inode Change Date/Time     : 2023:11:05 20:36:04+05:30
+File Permissions                : -rw-r--r--
+File Type                       : BMP
+File Type Extension             : bmp
+MIME Type                       : image/bmp
+BMP Version                     : Unknown (53434)
+Image Width                     : 1134
+Image Height                    : 1134
+Planes                          : 1
+Bit Depth                       : 24
+Compression                     : None
+Image Length                    : 2893400
+Pixels Per Meter X              : 5669
+Pixels Per Meter Y              : 5669
+Num Colors                      : Use BitDepth
+Num Important Colors            : All
+Red Mask                        : 0x27171a23
+Green Mask                      : 0x20291b1e
+Blue Mask                       : 0x1e212a1d
+Alpha Mask                      : 0x311a1d26
+Color Space                     : Unknown (,5%()
+Rendering Intent                : Unknown (826103054)
+Image Size                      : 1134x1134
+Megapixels                      : 1.3
+```
+
+It seems to be a `.bmp` (bitmap) file with a size of 1134x1134 pixels. Thus wer rename it to `tunn3l_v1s10n.bmp`.
+
+```
+~/Downloads $ mv tunn3l_v1s10n tunn3l_v1s10n.bmp
+renamed 'tunn3l_v1s10n' -> 'tunn3l_v1s10n.bmp'
+```
+
+Opening the file in Photopea, we get this result
+
+![Not a flag](../Images/photopea_1.png)
+
+The file seems to be missing pixels in its height, since it was given its height and width were the same (1134).
+
+So, we need to change the headers of the bitmap to change it to its correct resolution. For this, we open a hex editor such as `xxd` to edit it
+
+The height of a bitmap file is given at offset 0x16.
+
+```
+~/Downloads $ xxd tunn3l_v1s10n.bmp | head -2
+00000000: 424d 8e26 2c00 0000 0000 bad0 0000 bad0  BM.&,...........
+00000010: 0000 6e04 0000 3201 0000 0100 1800 0000  ..n...2.........
+                         ^^^^
+                      the height
+```
+
+`3201` in this means a height of `0x0132`. This is because the bitmap is a little-endian file format, with the least significant byte (LSB) stored first. So we change it to 1134 in hexdecimal, which turns out to be `0x46e`, or `6e 04` in little-endian form.
+
+```
+~/Downloads $ xxd tunn3l_v1s10n.bmp | head -2
+00000000: 424d 8e26 2c00 0000 0000 bad0 0000 bad0  BM.&,...........
+00000010: 0000 6e04 0000 6e04 0000 0100 1800 0000  ..n...n.........
+                         ^^^^
+                      the height
+```
+
+Now opening this in Photopea, we get this result, and the flag turns out to be `picoCTF{qu1t3_a_v13w_2020}`.
+
+![The flag](../Images/photopea_2.png)
+
 # Trivial Flag Transfer Protocol
 
 **Flag:** `picoCTF{h1dd3n_1n_pLa1n_51GHT_18375919}`
