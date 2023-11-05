@@ -63,7 +63,7 @@ The height of a bitmap file is given at offset 0x16.
                       the height
 ```
 
-`3201` in this means a height of `0x0132`. This is because the bitmap is a little-endian file format, with the least significant byte (LSB) stored first. So we change it to 1134 in hexdecimal, which turns out to be `0x46e`, or `6e 04` in little-endian form.
+`3201` in this means a height of `0x0132` (306 in decimal). This is because the bitmap is a little-endian file format, with the least significant byte (LSB) stored first. So we change it to 1134 in hexdecimal, which turns out to be `0x46e`, or `6e04` in little-endian form.
 
 ```
 ~/Downloads $ xxd tunn3l_v1s10n.bmp | head -2
