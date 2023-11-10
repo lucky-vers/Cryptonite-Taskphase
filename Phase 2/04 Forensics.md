@@ -202,12 +202,9 @@ Entering the directory `Forensics is fun`, we find a file called `hidden` inside
 Z m x h Z z o g c G l j b 0 N U R n t E M W R f d V 9 r b j B 3 X 3 B w d H N f c l 9 6 M X A 1 f Q
 ```
 
-It seems to be a base64 cipher. Removing the spaces and using `base64` on it, we get the following output
+It seems to be a base64 cipher. Removing the spaces and using `base64 -d` on it, we get the following output
 
 ```
-…/Downloads/Forensics is fun/ppt/slideMasters $ sed -i 's/ //g' hidden
-…/Downloads/Forensics is fun/ppt/slideMasters $ cat hidden
-ZmxhZzogcGljb0NURntEMWRfdV9rbjB3X3BwdHNfcl96MXA1fQ
-…/Downloads/Forensics is fun/ppt/slideMasters $ base64 -d hidden
-flag: picoCTF{D1d_u_kn0w_ppts_r_z1p5}
+…/Downloads/Forensics is fun/ppt/slideMasters $ tr -d ' ' < hidden | base64 -d
+flag: picoCTF{D1d_u_kn0w_ppts_r_z1p5}%
 ```
