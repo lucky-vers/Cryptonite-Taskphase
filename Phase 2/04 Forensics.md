@@ -38,7 +38,7 @@ Image Size                      : 1134x1134
 Megapixels                      : 1.3
 ```
 
-It seems to be a `.bmp` (bitmap) file with a size of 1134x1134 pixels. Thus wer rename it to `tunn3l_v1s10n.bmp`.
+It seems to be a `.bmp` (bitmap) file with a size of 1134x1134 pixels. Thus we rename it to `tunn3l_v1s10n.bmp`.
 
 ```
 ~/Downloads $ mv tunn3l_v1s10n tunn3l_v1s10n.bmp
