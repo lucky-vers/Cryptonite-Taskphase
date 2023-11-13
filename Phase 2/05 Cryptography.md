@@ -140,10 +140,7 @@ import string
 
 x = [350, 63, 353, 198, 114, 369, 346, 184, 202, 322, 94, 235, 114, 110, 185, 188, 225, 212, 366, 374, 261, 213] # Contents of `message.txt` converted to an array
 
-keys = []
-
-for i in string.ascii_uppercase + string.digits + '_':
-    keys.append(i)
+keys = [i for i in string.ascii_uppercase + string.digits + '_']
 
 for i in x:
     print(keys[i % 37])
