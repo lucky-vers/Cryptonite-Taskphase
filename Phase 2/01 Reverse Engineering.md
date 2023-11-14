@@ -76,7 +76,7 @@ Python 3.11.5 (main, Sep  2 2023, 18:29:07) [GCC 13.2.1 20230801] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import hashlib
 >>> username_trial = b"FRASER"
->>> hashlib.sha256(username_trial).hexdigest()
+>>> hex = hashlib.sha256(username_trial).hexdigest()
 '92d7ac3c9a0cf9d527a5906540d6c59c80bf8d7ad5bb1885f5f79b5b24a6d387'
 ```
 
