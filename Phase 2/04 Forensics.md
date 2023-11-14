@@ -38,14 +38,9 @@ Image Size                      : 1134x1134
 Megapixels                      : 1.3
 ```
 
-It seems to be a `.bmp` (bitmap) file with a size of 1134x1134 pixels. Thus we rename it to `tunn3l_v1s10n.bmp`.
+It seems to be a bitmap file with a size of 1134x1134 pixels. To indicate this, we rename it to `tunn3l_v1s10n.bmp`.
 
-```
-~/Downloads $ mv tunn3l_v1s10n tunn3l_v1s10n.bmp
-renamed 'tunn3l_v1s10n' -> 'tunn3l_v1s10n.bmp'
-```
-
-Opening the file in Photopea, we get this result
+Now opening the file in Photopea, we get this result
 
 ![Not a flag](../Images/photopea_1.jpg)
 
@@ -73,7 +68,7 @@ The height of a bitmap file is given at offset 0x16.
                       the height
 ```
 
-Now opening this in Photopea, we get this result, and the flag turns out to be `picoCTF{qu1t3_a_v13w_2020}`.
+Now opening this in Photopea, we get this result, and the flag comes out to be `picoCTF{qu1t3_a_v13w_2020}`.
 
 ![The flag](../Images/photopea_2.jpg)
 
@@ -85,7 +80,7 @@ We get a file `tftp.pcapng`. Opening it in `wireshark`, we extract all the files
 
 ![Wireshark extraction](../Images/wireshark_extraction.jpg)
 
-In the file `instructions.txt`, the message is `GSGCQBRFAGRAPELCGBHEGENSSVPFBJRZHFGQVFTHVFRBHESYNTGENAFSRE.SVTHERBHGNJNLGBUVQRGURSYNTNAQVJVYYPURPXONPXSBEGURCYNA.`, and seems to be a `ROT-13` cipher. And indeed, decoding it we get
+In the file `instructions.txt`, the message is `GSGCQBRFAGRAPELCGBHEGENSSVPFBJRZHFGQVFTHVFRBHESYNTGENAFSRE.SVTHERBHGNJNLGBUVQRGURSYNTNAQVJVYYPURPXONPXSBEGURCYNA.`, and seems to be a ROT-13 cipher. And indeed, decoding it we get
 
 ![The decrypted message](../Images/wireshark_instructions_message_decrypted.jpg)
 
@@ -153,19 +148,15 @@ data.tar.xz: extracted to `usr'
 This seems to hint at the passphrase being `DUEDILIGENCE`. Trying it on the three images, we get the following results
 
 ```
-~/Downloads $ steghide --extract -sf picture1.bmp
-Enter passphrase:
+~/Downloads $ steghide -p "DUEDILIGENCE" --extract -sf picture1.bmp
 steghide: could not extract any data with that passphrase!
-~/Downloads $ steghide --extract -sf picture2.bmp
-Enter passphrase:
+~/Downloads $ steghide -p "DUEDILIGENCE" --extract -sf picture2.bmp
 steghide: could not extract any data with that passphrase!
-~/Downloads $ steghide --extract -sf picture3.bmp
-Enter passphrase:
+~/Downloads $ steghide -p "DUEDILIGENCE" --extract -sf picture3.bmp
 wrote extracted data to "flag.txt".
 ```
 
-And now using `cat` on the flag file, we get
-
+And the contents of `flag.txt` are the flag in plantext.
 
 ```
 ~/Downloads $ cat flag.txt
@@ -206,5 +197,5 @@ It seems to be a base64 cipher. Removing the spaces and using `base64 -d` on it,
 
 ```
 …/Downloads/Forensics is fun/ppt/slideMasters $ tr -d ' ' < hidden | base64 -d
-flag: picoCTF{D1d_u_kn0w_ppts_r_z1p5}%
+flag: picoCTF{D1d_u_kn0w_ppts_r_z1p5}
 ```

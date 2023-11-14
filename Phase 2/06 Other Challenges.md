@@ -79,6 +79,7 @@ Thus, the code turns out to be `picoCTF{num3r1cal_c0ntr0l_775375c7}`.
 **Flag:** `picoCTF{1|\/|_4_p34|\|ut_f3bc410e}`
 
 We're given a file `crackme.py`. In it we find the following variable declaration
+
 ```
 bezos_cc_secret = "A:4@r%uL`M-^M0c0AbcM-MFE07b34c`_6N"
 ```
@@ -133,7 +134,7 @@ And at the very end of the file, the latter function runs
 choose_greatest()
 ```
 
-We change the function to `decode_secret` and set its parameters as `bezos_cc_secret`
+We change the function to `decode_secret` and set its parameters as `bezos_cc_secret`. Executing the python script now, we get the flag.
 
 ```
 decode_secret(bezos_cc_secret)
@@ -144,4 +145,3 @@ decode_secret(bezos_cc_secret)
 picoCTF{1|\/|_4_p34|\|ut_f3bc410e}
 ```
 
-We thus get the flag.

@@ -2,7 +2,7 @@
 
 **Flag:** `picoCTF{et_tu?_07d5c0892c1438d2b32600e83dc2b0e5}`
 
-In this, we're given an encrypted mesage `dcebcmebecamcmanaedbacdaanafagapdaaoabaaafdbapdpaaapadanandcafaadbdaapdpandcac` and a file `new_caesar.py`. The latter's contents are
+In this, we're given an encrypted mesage `dcebcmebecamcmanaedbacdaanafagapdaaoabaaafdbapdpaaapadanandcafaadbdaapdpandcac` and a file `new_caesar.py`. The file's contents are
 
 ```
 import string
@@ -35,12 +35,12 @@ for i, c in enumerate(b16):
 print(enc)
 ```
 
-It looks like the encryption algorithm follows multiple steps:
+It looks like the encryption algorithm follows two steps:
 
 1. The flag is converted into base16 using the function `b16_encode`.
 2. The flag is then shifted by changing it to the value in `ALPHABET` of the index calculated by adding the alphabetical positions of the one-character key and flag, dividing it by the length of `ALPHABET` (i.e. 16), and finding its remainder.
 
-To decrypt the message, we simply have to follow the opposite of the steps described above
+To decrypt the message, we follow the reverse of the above steps
 
 ```
 import string
@@ -102,7 +102,7 @@ TcNcd.N/&S$R/'(!R #"'S!Q"!%//T'"SR!Q/T$
 CR=RS=BAAB@CBA@C
 ```
 
-The only decoding with real words seems to be `et_tu?_07d5c0892c1438d2b32600e83dc2b0e5`. We check it by wrapping it with `picoCTF{}`, and its correct.
+The only decoding with real words seems to be `et_tu?_07d5c0892c1438d2b32600e83dc2b0e5`. We check it by wrapping it with `picoCTF{}`, and it turns out to be correct.
 
 # miniRSA
 
@@ -117,7 +117,7 @@ e: 3
 ciphertext (c): 2205316413931134031074603746928247799030155221252519872650080519263755075355825243327515211479747536697517688468095325517209911688684309894900992899707504087647575997847717180766377832435022794675332132906451858990782325436498952049751141
 ```
 
-It looks like a simple RSA encrypted cipher text. Notice the small value of `e` (3). It ideally should be something much larger like 65537 or the cipher can be easily brute-forced. We do exactly that, using the [dcode RSA decryptor](https://www.dcode.fr/rsa-cipher)
+It looks like a simple RSA encrypted cipher text. Notice the small value of `e` (3). It ideally should be something much larger like 65537, or else the cipher can be easily brute-forced. We do exactly that, using the [dcode RSA decryptor](https://www.dcode.fr/rsa-cipher)
 
 ![Result](../Images/minirsa.jpg)
 
@@ -138,41 +138,17 @@ The python code for the decoding using this algorithm is this
 ```
 import string
 
-x = [350, 63, 353, 198, 114, 369, 346, 184, 202, 322, 94, 235, 114, 110, 185, 188, 225, 212, 366, 374, 261, 213] # Contents of `message.txt` converted to an array
-
+message = [350, 63, 353, 198, 114, 369, 346, 184, 202, 322, 94, 235, 114, 110, 185, 188, 225, 212, 366, 374, 261, 213]
 keys = [i for i in string.ascii_uppercase + string.digits + '_']
 
-for i in x:
-    print(keys[i % 37])
+for char in message:
+    print(keys[char % 37])
 
 ```
 
 Executing it, we get the following output
 
 ```
-~/Downloads $ python3 main.py
-R
-0
-U
-N
-D
-_
-N
-_
-R
-0
-U
-N
-D
-_
-A
-D
-D
-1
-7
-E
-C
-2
 ~/Downloads $ python3 main.py | tr -d '\n'
 R0UND_N_R0UND_ADD17EC2
 ~/Downloads $

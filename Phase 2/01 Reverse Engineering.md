@@ -66,18 +66,9 @@ There's also a function `check_key` that presumably we need to test with to chec
             return False
 ```
 
-So it seems it checks whether the dynamic part of the given key is equal to the combination of elements of the variable `hashlib.sha256(username_trial).hexdigest()` with the following indices:
+So it seems it checks whether the dynamic part of the given key is equal to the combination of elements of the variable `hashlib.sha256(username_trial).hexdigest()` with the indices **4**, **5**, **3**, **6**, **2**, **7**, **1**, and **8**.
 
-- 4
-- 5
-- 3
-- 6
-- 2
-- 7
-- 1
-- 8
-
-The value of `hashlib.sha256(username_trial).hexdigest()` is controlled by the value of `username_trial`, which in this case is `b"FRASER"`. Using this, we can get its value
+The value of `hashlib.sha256(username_trial).hexdigest()` is controlled by the value of `username_trial`, which in this case is `FRASER`. Using this, we can get its value
 
 ```
 ~ $ python3
@@ -93,16 +84,9 @@ Looping through the required indices on the hashed value, we get
 
 ```
 >>> for i in [4, 5, 3, 6, 2, 7, 1, 8]:
-...     print(hashlib.sha256(username_trial).hexdigest()[i])
+...     print(hex[i], end = '')
 ...
-a
-c
-7
-3
-d
-c
-2
-9
+ac73dc29
 ```
 
 Therefore the value of the dynamic key turns out to be `ac73dc29`, leading to the full key being `picoCTF{1n_7h3_|<3y_of_ac73dc29}`.
@@ -149,7 +133,6 @@ Welcome to the Arcane Calculator, tron!
 We're given a binary `debugger0_a` and our task is to figure out the value of the register `eax` at the end. We can use the program `objdump` with the `-D` flag for this
 
 ```
-~/Downloads $ chmod +x debugger0_a
 ~/Downloads $ objdump -D debugger0_a | less
 ```
 
@@ -243,7 +226,7 @@ This copies the value in `w0` to `w1`. It then prints using `printf` the value a
 
 So, the result of this code will be `Result: 1592237099`.
 
-Converting the numerical value to hexacdecimal, we get `5EE79C2B`
+Converting the numerical value to hexadecimal, we get `5EE79C2B`
 
 ```
 ~ $ printf "%X\n" 1592237099
