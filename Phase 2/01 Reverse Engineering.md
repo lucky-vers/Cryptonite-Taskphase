@@ -176,7 +176,7 @@ The value finally in `eax` is therefore 0x86342 in hexadecimal, or `549698` in d
 
 **Flag:** `picoCTF{5EE79C2B}`
 
-We're given an ARM assembly source file `chall.s`. Its structured as follows
+We're given an ARM assembly source file `chall.s`. It's structured as follows
 
 ```
 main:

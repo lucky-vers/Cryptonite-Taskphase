@@ -119,7 +119,7 @@ ciphertext (c): 2205316413931134031074603746928247799030155221252519872650080519
 
 It looks like a simple RSA encrypted cipher text. Notice the small value of `e` (3). It ideally should be something much larger like 65537 or the cipher can be easily brute-forced. We do exactly that, using the [dcode RSA decryptor](https://www.dcode.fr/rsa-cipher)
 
-![Result](../Images/minirsa.png)
+![Result](../Images/minirsa.jpg)
 
 # basic-mod1
 

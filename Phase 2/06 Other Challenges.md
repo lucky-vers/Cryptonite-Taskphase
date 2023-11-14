@@ -13,7 +13,7 @@ Putting this into any online `ROT-13` decoder (I used *https://rot13.com/*), we 
 
 We're given an image with a list of numbers along with opening and closing brackets.
 
-![The Numbers](../Images/the_numbers.png)
+![The Numbers](../Images/the_numbers.jpg)
 
 It seems to be the flag with the letters encoded as their positions in the alphabet. We write some simple C code to decode it
 
@@ -70,7 +70,7 @@ G0X1.1034Y3.8621
 
 These, as it turns out, are G-code instructions. G-code is a programming language specially designed for the control of CNC machines and 3D printers. Using an online G-code interpreter such as [NCViewer](https://ncviewer.com/), we get the following image.
 
-![The Flag](../Images/gcode.png)
+![The Flag](../Images/gcode.jpg)
 
 Thus, the code turns out to be `picoCTF{num3r1cal_c0ntr0l_775375c7}`.
 

@@ -47,7 +47,7 @@ renamed 'tunn3l_v1s10n' -> 'tunn3l_v1s10n.bmp'
 
 Opening the file in Photopea, we get this result
 
-![Not a flag](../Images/photopea_1.png)
+![Not a flag](../Images/photopea_1.jpg)
 
 The file seems to be missing pixels in its height, since it was given its height and width were the same (1134).
 
@@ -75,7 +75,7 @@ The height of a bitmap file is given at offset 0x16.
 
 Now opening this in Photopea, we get this result, and the flag turns out to be `picoCTF{qu1t3_a_v13w_2020}`.
 
-![The flag](../Images/photopea_2.png)
+![The flag](../Images/photopea_2.jpg)
 
 # Trivial Flag Transfer Protocol
 
@@ -83,11 +83,11 @@ Now opening this in Photopea, we get this result, and the flag turns out to be `
 
 We get a file `tftp.pcapng`. Opening it in `wireshark`, we extract all the files transferred using the `TFTP` protocol.
 
-![Wireshark extraction](../Images/wireshark_extraction.png)
+![Wireshark extraction](../Images/wireshark_extraction.jpg)
 
 In the file `instructions.txt`, the message is `GSGCQBRFAGRAPELCGBHEGENSSVPFBJRZHFGQVFTHVFRBHESYNTGENAFSRE.SVTHERBHGNJNLGBUVQRGURSYNTNAQVJVYYPURPXONPXSBEGURCYNA.`, and seems to be a `ROT-13` cipher. And indeed, decoding it we get
 
-![The decrypted message](../Images/wireshark_instructions_message_decrypted.png)
+![The decrypted message](../Images/wireshark_instructions_message_decrypted.jpg)
 
 Removing the spaces, the instructions seem to be
 
@@ -95,7 +95,7 @@ Removing the spaces, the instructions seem to be
 
 In the file `plan`, we follow the same process
 
-![Another file](../Images/theplan.png)
+![Another file](../Images/theplan.jpg)
 
 Using the same method we did earlier with `ROT-13`, we get the final message as
 
