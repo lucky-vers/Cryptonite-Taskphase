@@ -124,7 +124,6 @@ Extracting `data.tar.xz`, we discover that the program being used was `steghide`
 
 ```
 ~/Downloads $ atool -l data.tar.xz
-Wide character in setenv at /sbin/atool line 33.
 drwxr-xr-x root/root         0 2014-10-15 05:32 ./
 drwxr-xr-x root/root         0 2014-10-15 05:32 ./usr/
 drwxr-xr-x root/root         0 2014-10-15 05:32 ./usr/share/
