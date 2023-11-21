@@ -37,10 +37,8 @@ int main()
 
 Compiling and running it, we get
 ```
-~/Projects $ gcc main.c -o main
-~/Projects $ ./main
+~/Projects $ gcc main.c -o main && ./main
 QJDPDUGUIFOVNCFSTNBTPO
-~/Projects $
 ```
 
 This seems to be a Caesar cipher. Using the solver on [dcode](https://www.dcode.fr/caesar-cipher) and decrypting it using brute-force, we get the answer as `PICOCTFTHENUMBERSMASON`.
