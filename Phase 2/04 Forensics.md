@@ -123,22 +123,18 @@ program.deb
 Extracting `data.tar.xz`, we discover that the program being used was `steghide`
 
 ```
-~/Downloads/program $ atool -x data.tar.xz
-.
-.
-.
-./usr/share/locale/fr/
-./usr/share/locale/fr/LC_MESSAGES/
-./usr/share/locale/fr/LC_MESSAGES/steghide.mo
-./usr/share/locale/de/
-./usr/share/locale/de/LC_MESSAGES/
-./usr/share/locale/de/LC_MESSAGES/steghide.mo
-./usr/share/locale/es/
-./usr/share/locale/es/LC_MESSAGES/
-./usr/share/locale/es/LC_MESSAGES/steghide.mo
-./usr/bin/
-./usr/bin/steghide
-data.tar.xz: extracted to `usr'
+~/Downloads $ atool -l data.tar.xz
+Wide character in setenv at /sbin/atool line 33.
+drwxr-xr-x root/root         0 2014-10-15 05:32 ./
+drwxr-xr-x root/root         0 2014-10-15 05:32 ./usr/
+drwxr-xr-x root/root         0 2014-10-15 05:32 ./usr/share/
+drwxr-xr-x root/root         0 2014-10-15 05:32 ./usr/share/doc/
+drwxr-xr-x root/root         0 2014-10-15 05:32 ./usr/share/doc/steghide/
+-rw-r--r-- root/root      6066 2014-10-15 05:32 ./usr/share/doc/steghide/ABOUT-NLS.gz
+-rw-r--r-- root/root      2771 2014-10-15 05:32 ./usr/share/doc/steghide/LEAME.gz
+-rw-r--r-- root/root      2488 2003-09-28 21:00 ./usr/share/doc/steghide/README.gz
+-rw-r--r-- root/root      1763 2014-10-15 05:31 ./usr/share/doc/steghide/changelog.Debian.gz
+-rw-r--r-- root/root       215 2014-10-15 05:31 ./usr/share/doc/steghide/changelog.Debian.amd64.gz
 ```
 
 `steghide` requires a passphrase to extract data from images. Remember the sentence
