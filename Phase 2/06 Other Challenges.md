@@ -17,7 +17,7 @@ We're given an image with a list of numbers along with opening and closing brack
 
 It seems to be the flag with the letters encoded as their positions in the alphabet. We write some simple C code to decode it
 
-```
+```c
 #include <stdio.h>
 
 int main()
@@ -36,7 +36,7 @@ int main()
 ```
 
 Compiling and running it, we get
-```
+```bash
 ~/Projects $ gcc main.c -o main
 ~/Projects $ ./main
 QJDPDUGUIFOVNCFSTNBTPO
@@ -53,7 +53,7 @@ This seems to be a Caesar cipher. Using the solver on [dcode](https://www.dcode.
 
 Running the given netcat command, we get a strange sequence of characters
 
-```
+```bash
 ~ $ nc mercury.picoctf.net 53740
 G17 G21 G40 G90 G64 P0.003 F50
 G0Z0.1
@@ -80,13 +80,13 @@ Thus, the code turns out to be `picoCTF{num3r1cal_c0ntr0l_775375c7}`.
 
 We're given a file `crackme.py`. In it we find the following variable declaration
 
-```
+```py
 bezos_cc_secret = "A:4@r%uL`M-^M0c0AbcM-MFE07b34c`_6N"
 ```
 
 We're also given two functions, `decode_secret` and `choose_greatest`
 
-```
+```py
 def decode_secret(secret):
     """ROT47 decode
 
@@ -130,17 +130,17 @@ def choose_greatest():
 
 And at the very end of the file, the latter function runs
 
-```
+```py
 choose_greatest()
 ```
 
 We change the function to `decode_secret` and set its parameters as `bezos_cc_secret`. Executing the python script now, we get the flag.
 
-```
+```py
 decode_secret(bezos_cc_secret)
 ```
 
-```
+```bash
 ~/Downloads $ python3 crackme.py
 picoCTF{1|\/|_4_p34|\|ut_f3bc410e}
 ```
