@@ -148,15 +148,13 @@ data.tar.xz: extracted to `usr'
 This seems to hint at the passphrase being `DUEDILIGENCE`. Trying it on the three images, we get the following results
 
 ```
-~/Downloads $ steghide -p "DUEDILIGENCE" --extract -sf picture1.bmp
+~/Downloads $ for pic in *.bmp; do steghide --extract -sf "$pic" -p "DUEDILIGENCE"; done
 steghide: could not extract any data with that passphrase!
-~/Downloads $ steghide -p "DUEDILIGENCE" --extract -sf picture2.bmp
 steghide: could not extract any data with that passphrase!
-~/Downloads $ steghide -p "DUEDILIGENCE" --extract -sf picture3.bmp
 wrote extracted data to "flag.txt".
 ```
 
-And the contents of `flag.txt` are the flag in plantext.
+And the contents of `flag.txt` are the flag in plaintext.
 
 ```
 ~/Downloads $ cat flag.txt
