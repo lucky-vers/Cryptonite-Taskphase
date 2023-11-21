@@ -4,7 +4,7 @@
 
 In this, we're given an encrypted mesage `dcebcmebecamcmanaedbacdaanafagapdaaoabaaafdbapdpaaapadanandcafaadbdaapdpandcac` and a file `new_caesar.py`. The file's contents are
 
-```
+```py
 import string
 
 LOWERCASE_OFFSET = ord("a")
@@ -42,7 +42,7 @@ It looks like the encryption algorithm follows two steps:
 
 To decrypt the message, we follow the reverse of the above steps
 
-```
+```py
 import string
 
 LOWERCASE_OFFSET = ord("a")
@@ -135,7 +135,7 @@ In this challenge, a message is to be decrypted in the following fashion:
 
 The python code for the decoding using this algorithm is this
 
-```
+```py
 import string
 
 message = [350, 63, 353, 198, 114, 369, 346, 184, 202, 322, 94, 235, 114, 110, 185, 188, 225, 212, 366, 374, 261, 213]

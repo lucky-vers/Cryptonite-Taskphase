@@ -4,7 +4,7 @@
 
 For this, we're given a file `keygenme-trial.py`. In its source code block, we're given the following variable declarations
 
-```
+```py
 username_trial = "FRASER"
 bUsername_trial = b"FRASER"
 
@@ -18,7 +18,7 @@ It seems that the flag we want is in the template of `key_full_template_trial`.
 
 There's also a function `check_key` that presumably we need to test with to check whether the flag/key we enter is also a valid activation key or not. It performs the following checks
 
-```
+```py
         # Check static base key part --v
         i = 0
         for c in key_part_static1_trial:
@@ -70,7 +70,7 @@ So it seems it checks whether the dynamic part of the given key is equal to the 
 
 The value of `hashlib.sha256(username_trial).hexdigest()` is controlled by the value of `username_trial`, which in this case is `FRASER`. Using this, we can get its value
 
-```
+```py
 ~ $ python3
 Python 3.11.5 (main, Sep  2 2023, 18:29:07) [GCC 13.2.1 20230801] on linux
 Type "help", "copyright", "credits" or "license" for more information.
@@ -82,7 +82,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 Looping through the required indices on the hashed value, we get
 
-```
+```py
 >>> for i in [4, 5, 3, 6, 2, 7, 1, 8]:
 ...     print(hex[i], end = '')
 ...
@@ -138,7 +138,7 @@ We're given a binary `debugger0_a` and our task is to figure out the value of th
 
 Searching for the main function `main:`, we get
 
-```
+```nasm
 0000000000001129 <main>:
     1129:       f3 0f 1e fa             endbr64
     112d:       55                      push   %rbp
@@ -161,7 +161,7 @@ The value finally in `eax` is therefore 0x86342 in hexadecimal, or `549698` in d
 
 We're given an ARM assembly source file `chall.s`. It's structured as follows
 
-```
+```nasm
 main:
     stp x29, x30, [sp, -48]!
     add x29, sp, 0
@@ -185,12 +185,12 @@ main:
 Here, the two arguments provided to the file `266134863` and `1592237099` are converted to integers via the `atoi` function and stored in the registers `w0` and `w1` respectively.
 It then branches to the `func1` code block, which has the following code
 
-```
+```nasm
 func1:
-    sub	sp, sp, #16
-    str	w0, [sp, 12]
-    str	w1, [sp, 8]
-    ldr	w1, [sp, 12]
+    sub sp, sp, #16
+    str w0, [sp, 12]
+    str w1, [sp, 8]
+    ldr w1, [sp, 12]
     ldr w0, [sp, 8]
     cmp w1, w0
     bls .L2
@@ -202,7 +202,7 @@ In this, `w0` and `w1` are compared. If `w1` is lesser than or equal to `w0`, it
 
 Since `w1` (1592237099) is greater than `w0` (266134863), the code branches to `.L3`
 
-```
+```nasm
 .LC3:
     add sp, sp, 16
     ret
@@ -212,7 +212,7 @@ This just adds 16 to the stack pointer.
 
 After this, the `.main` function continues
 
-```
+```nasm
     mov  w1, w0
     adrp x0, .LC0
     add  x0, x0, :lo12:.LC0

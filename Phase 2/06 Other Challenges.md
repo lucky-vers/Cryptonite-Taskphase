@@ -36,7 +36,7 @@ int main()
 ```
 
 Compiling and running it, we get
-```bash
+```
 ~/Projects $ gcc main.c -o main
 ~/Projects $ ./main
 QJDPDUGUIFOVNCFSTNBTPO
@@ -53,7 +53,7 @@ This seems to be a Caesar cipher. Using the solver on [dcode](https://www.dcode.
 
 Running the given netcat command, we get a strange sequence of characters
 
-```bash
+```
 ~ $ nc mercury.picoctf.net 53740
 G17 G21 G40 G90 G64 P0.003 F50
 G0Z0.1
@@ -140,7 +140,7 @@ We change the function to `decode_secret` and set its parameters as `bezos_cc_se
 decode_secret(bezos_cc_secret)
 ```
 
-```bash
+```
 ~/Downloads $ python3 crackme.py
 picoCTF{1|\/|_4_p34|\|ut_f3bc410e}
 ```
