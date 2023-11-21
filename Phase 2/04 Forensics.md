@@ -120,7 +120,7 @@ debian-binary
 program.deb
 ```
 
-Extracting `data.tar.xz`, we discover that the program being used was `steghide`
+Analyzing `data.tar.xz`, we discover that the program being used was `steghide`
 
 ```
 ~/Downloads $ atool -l data.tar.xz
